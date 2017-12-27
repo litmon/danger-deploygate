@@ -1,33 +1,43 @@
+require_relative 'deploygate_client'
+
 module Danger
-  # This is your plugin class. Any attributes or methods you expose here will
-  # be available from within your Dangerfile.
-  #
-  # To be published on the Danger plugins site, you will need to have
-  # the public interface documented. Danger uses [YARD](http://yardoc.org/)
-  # for generating documentation from your plugin source, and you can verify
-  # by running `danger plugins lint` or `bundle exec rake spec`.
-  #
-  # You should replace these comments with a public description of your library.
-  #
-  # @example Ensure people are well warned about merging on Mondays
-  #
-  #          my_plugin.warn_on_mondays
-  #
-  # @see  Fukuo Kadota/danger-deploygate
-  # @tags monday, weekends, time, rattata
-  #
   class DangerDeploygate < Plugin
 
-    # An attribute that you can read/write from your Dangerfile
     #
-    # @return   [Array<String>]
-    attr_accessor :my_attribute
+    # Uploading user or group name
+    #
+    # @return   [String]
+    #
+    attr_accessor :user
 
-    # A method that you can call from your Dangerfile
-    # @return   [Array<String>]
     #
-    def warn_on_mondays
-      warn 'Trying to merge code on a Monday' if Date.today.wday == 1
+    # API Token
+    #
+    # @return   [String]
+    #
+    attr_writer :token
+
+    #
+    # Uploaded response
+    #
+    # @return [DeployGate::Response]
+    #
+    attr_reader :response
+
+    def token
+      # default value can set from environment
+      @token ||= ENV['DEPLOYGATE_API_TOKEN']
+    end
+
+    def upload(binary, filename, message = nil, distribution_name = nil)
+      client = DeployGate::Client.new(user, token)
+      responses = client.upload(binary, filename, message, distribution_name)
+
+      app_name = responses['results']['name']
+      revision = "＃#{responses['results']['revision']}"
+      url = "https://deploygate.com#{responses['results']['path']}"
+
+      message "DeployGate Uploaded #{app_name} #{revision}, see detail: #{url}"
     end
   end
 end
