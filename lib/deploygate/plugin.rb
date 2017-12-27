@@ -29,7 +29,7 @@ module Danger
       revision = "＃#{response['results']['revision']}"
       url = "https://deploygate.com#{response['results']['path']}"
 
-      message "DeployGate Uploaded #{app_name} #{revision}, see detail: #{url}"
+      message "DeployGate Uploaded <a href='#{url}'>#{app_name} #{revision}</a>"
     end
   end
 end
