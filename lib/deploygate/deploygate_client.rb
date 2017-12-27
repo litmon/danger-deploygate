@@ -6,7 +6,7 @@ module DeployGate
   class Client
     BASE_URL = 'https://deploygate.com/api'
 
-    def initialize(user: '', token: '')
+    def initialize(user, token)
       @user = user
       @token = token
     end
