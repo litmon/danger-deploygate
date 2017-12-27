@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = 'danger-deploygate'
   spec.version       = Deploygate::VERSION
   spec.authors       = ['Fukuo Kadota']
-  spec.email         = ['fukuo-kadota@cookpad.com']
+  spec.email         = ['app.fk91@gmail.com']
   spec.description   = %q{A short description of danger-deploygate.}
   spec.summary       = %q{A longer description of danger-deploygate.}
-  spec.homepage      = 'https://github.com/Fukuo Kadota/danger-deploygate'
+  spec.homepage      = 'https://github.com/litmon/danger-deploygate'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
