@@ -40,8 +40,16 @@ module DeployGate
       @res = res
     end
 
+    def code
+      @res.code
+    end
+
+    def message
+      @res.message
+    end
+
     def success?
-      @res.code == '200'
+      code == '200'
     end
 
     def body
